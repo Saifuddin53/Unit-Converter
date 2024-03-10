@@ -88,11 +88,14 @@ fun UnitConverter() {
         mutableStateOf("Meters")
     }
 
+    val conversionFactor by remember {
+        mutableStateOf(0.01)
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(36.dp, 20.dp)
-            .border(1.dp, Color.Gray),
+            .padding(36.dp, 20.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -101,9 +104,12 @@ fun UnitConverter() {
 
         Spacer(modifier = Modifier.height(36.dp))
 
-        OutlinedTextField(value = "Enter value",
+        OutlinedTextField(value = inputValue,
             onValueChange = {
                 inputValue = it
+            },
+            label = {
+                Text(text = "Enter value")
             })
 
         Spacer(modifier = Modifier.height(24.dp))
@@ -111,35 +117,86 @@ fun UnitConverter() {
         Row {
             Box(modifier = Modifier) {
                 Button(onClick = {
-                    expandedState = !(expandedState);
+                    inputExpandedState = true;
                 }) {
-                    Text(text = "Centimeters")
+                    Text(text = inputUnit)
                     Icon(
                         imageVector = Icons.Filled.ArrowDropDown,
                         contentDescription = ""
                     )
                 }
-                DropdownMenu(expanded = expandedState, onDismissRequest = { /*TODO*/ }) {
-                    DropdownMenuItem(text = { Text(text = "Centimeters") }, onClick = { /*TODO*/ })
-                    DropdownMenuItem(text = { Text(text = "Meters") }, onClick = { /*TODO*/ })
-                    DropdownMenuItem(text = { Text(text = "Feet") }, onClick = { /*TODO*/ })
-                    DropdownMenuItem(text = { Text(text = "Millimeters") }, onClick = { /*TODO*/ })
+                DropdownMenu(expanded = inputExpandedState, onDismissRequest = { inputExpandedState = false }) {
+                    DropdownMenuItem(
+                        text = {
+                        Text(text = "Centimeters") },
+                        onClick = {
+                            inputUnit = "Centimeters"
+                            inputExpandedState = false
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = {
+                        Text(text = "Meters") },
+                        onClick = {
+                            inputUnit = "Meters"
+                            inputExpandedState = false
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = {
+                        Text(text = "Feet") },
+                        onClick = {
+                            inputUnit = "Feet"
+                            inputExpandedState = false
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = {
+                        Text(text = "Millimeters") },
+                        onClick = {
+                            inputUnit = "Millimeters"
+                            inputExpandedState = false
+                        }
+                    )
                 }
             }
 
             Spacer(modifier = Modifier.width(8.dp))
 
             Box(modifier = Modifier) {
-                Button(onClick = { /*TODO*/ }) {
-                    Text(text = "Meters")
+                Button(onClick = { outputExpandedState = true }) {
+                    Text(text = outputUnit)
                     Icon(imageVector = Icons.Filled.ArrowDropDown,
                         contentDescription = "")
                 }
-                DropdownMenu(expanded = false, onDismissRequest = { /*TODO*/ }) {
-                    DropdownMenuItem(text = { Text(text = "Centimeters") }, onClick = { /*TODO*/ })
-                    DropdownMenuItem(text = { Text(text = "Meters") }, onClick = { /*TODO*/ })
-                    DropdownMenuItem(text = { Text(text = "Feet") }, onClick = { /*TODO*/ })
-                    DropdownMenuItem(text = { Text(text = "Millimeters") }, onClick = { /*TODO*/ })
+                DropdownMenu(expanded = outputExpandedState, onDismissRequest = { outputExpandedState = false }) {
+                    DropdownMenuItem(
+                        text = { Text(text = "Centimeters") },
+                        onClick = {
+                            outputUnit = "Centimeters"
+                            outputExpandedState = false
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = { Text(text = "Meters") },
+                        onClick = {
+                            outputUnit = "Meters"
+                            outputExpandedState = false}
+                    )
+                    DropdownMenuItem(
+                        text = { Text(text = "Feet") },
+                        onClick = {
+                            outputUnit = "Feet"
+                            outputExpandedState = false
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = { Text(text = "Millimeters") },
+                        onClick = {
+                            outputUnit = "Millimeters"
+                            outputExpandedState = false
+                        }
+                    )
                 }
             }
         }
